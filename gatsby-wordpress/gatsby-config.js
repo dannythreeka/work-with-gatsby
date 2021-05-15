@@ -8,11 +8,39 @@ module.exports = {
     {
       resolve: `gatsby-source-wordpress`,
       options: {
+        // The base url to your WP site.
+        // baseUrl: 'untidying-scenes.000webhostapp.com', // 
         // the only required plugin option for WordPress is the GraphQL url.
         url:
           process.env.WPGRAPHQL_URL ||
           `https://untidying-scenes.000webhostapp.com/graphql`,
+        // WP.com sites set to true, WP.org set to false
+        hostingWPCOM: false,
+        // The protocol. This can be http or https.
+        protocol: 'https',
+        // Use 'Advanced Custom Fields' WordPress plugin
+        useACF: false,
+        auth: {},
+        // Set to true to debug endpoints on 'gatsby build'
+        verboseOutput: true,
+        includedRoutes: [
+          "**/categories",
+          "**/posts",
+          "**/pages",
+          "**/media",
+          "**/taxonomies",
+          "**/users",
+          "**/tags",
+        ],
       },
+      type: {
+        __all: {
+          limit: process.env.NODE_ENV === `development` ? 50 : null
+        },
+        develop: {
+          hardCacheMediaFiles: true,
+        }
+      }
     },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
