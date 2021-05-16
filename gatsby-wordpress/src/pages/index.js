@@ -1,29 +1,41 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+// import { StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-const IndexPage = () => (
-  <Layout>
-    <Seo title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <StaticImage
-      src="../images/gatsby-astronaut.png"
-      width={300}
-      quality={95}
-      formats={["AUTO", "WEBP", "AVIF"]}
-      alt="A Gatsby astronaut"
-      style={{ marginBottom: `1.45rem` }}
-    />
-    <p>
-      <Link to="/page-2/">Go to page 2</Link> <br />
-      <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-    </p>
-  </Layout>
-)
+const Home = (data) => {
+  console.log("AA");
+  console.log(JSON.stringify(data));
+  console.log("BB");
+  return (
+    <Layout>
+      <Seo title="Home" />
+      <h1>My WordPress Blog</h1>
+      <h4>Posts</h4>
+      <pre>{JSON.stringify(data, null, 4)}</pre>
+      {/* {data.allWpPost.nodes.map(node => (
+        <div>
+          <p>{node.title}</p>
+          <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+        </div>
+      ))} */}
+      <Link to="/about">About</Link>
+    </Layout>
+  )
+}
 
-export default IndexPage
+export const query = graphql`
+  {
+    allWpPost {
+      nodes {
+        id
+        title
+        excerpt
+      }
+    }
+  }
+`
+
+export default Home
