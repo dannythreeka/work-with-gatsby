@@ -1,41 +1,35 @@
-import * as React from "react"
-import { Link } from "gatsby"
-// import { StaticImage } from "gatsby-plugin-image"
-
+import React from "react"
+import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-const Home = (data) => {
-  console.log("AA");
-  console.log(JSON.stringify(data));
-  console.log("BB");
+export default function Home({ data }) {
+  //highlight-line
   return (
     <Layout>
-      <Seo title="Home" />
+      <Seo title="home" />
+      {/* highlight-start */}
       <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
-      <pre>{JSON.stringify(data, null, 4)}</pre>
-      {/* {data.allWpPost.nodes.map(node => (
+      {data.allWpPost.nodes.map(node => (
         <div>
           <p>{node.title}</p>
           <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
         </div>
-      ))} */}
-      <Link to="/about">About</Link>
+      ))}
+      {/* highlight-end */}
     </Layout>
   )
 }
 
-export const query = graphql`
-  {
-    allWpPost {
+export const pageQuery = graphql`
+  query {
+    allWpPost(sort: { fields: [date] }) {
       nodes {
-        id
         title
         excerpt
+        slug
       }
     }
   }
 `
-
-export default Home
