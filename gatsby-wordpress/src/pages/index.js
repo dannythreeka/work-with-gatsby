@@ -1,35 +1,36 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { Link } from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
 export default function Home({ data }) {
-  //highlight-line
   return (
     <Layout>
       <Seo title="home" />
-      {/* highlight-start */}
-      <h1>My WordPress Blog</h1>
-      <h4>Posts</h4>
-      {data.allWpPost.nodes.map(node => (
-        <div>
-          <p>{node.title}</p>
-          <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-        </div>
-      ))}
-      {/* highlight-end */}
+
+      <h1>Welcome to the my space</h1>
+      <div>
+        <h2 style={{ margin: 0 }}>
+          <Link
+            to="/wordpress-index"
+            style={{
+              textDecoration: `none`,
+            }}
+          >Wordpress Index
+        </Link>
+        </h2>
+        <h2 style={{ margin: 0 }}>
+          <Link
+            to="/local-md-index"
+            style={{
+              color: `tomato`,
+              textDecoration: `none`,
+            }}
+          >Local MD File Index
+        </Link>
+        </h2>
+      </div>
+
     </Layout>
   )
 }
-
-export const pageQuery = graphql`
-  query {
-    allWpPost(sort: { fields: [date] }) {
-      nodes {
-        title
-        excerpt
-        slug
-      }
-    }
-  }
-`
